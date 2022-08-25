@@ -13,8 +13,13 @@ DS.estimateScorePC <- function( itemData, dScores, itemParameters, o=DS.options(
 
 mllklh <- function( d, itemScores, itemParameters, o) {
   res = 0;
-  for ( j in 1:nrow(itemParameters) ) {
-        res = res - itemScores[j]*DS.itemImpact(matrix(d), itemParameters[j,], o)  - log(1 - DS.PCR(itemParameters[j,], matrix(d), o));
-  }
+
+  ff = itemScores * DS.itemImpact(matrix(d), itemParameters, o)  - log(1 - DS.PCR(itemParameters, matrix(d), o)); 
+
+  res = - sum(ff);
+
+  #for ( j in 1:nrow(itemParameters) ) {
+  #      res = res - itemScores[j]*DS.itemImpact(matrix(d), itemParameters[j,], o)  - log(1 - DS.PCR(itemParameters[j,], matrix(d), o));
+  #}
   return( res );
 }

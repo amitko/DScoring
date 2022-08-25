@@ -13,5 +13,9 @@ DS.PCR <- function(parameters,Dscore,o = dS.options()) {
       res[k,] = parameters[,3] + (1-parameters[,3])*(1 / ( 1 + ((1-Dscore[k,1])*parameters[,1]) / ((1 - parameters[,1]) * Dscore[k,1])^parameters[,2]));
     }
   }
+
+  res[ res < 0.00001 ] <- 0.00001;
+  res[ res > 0.99999 ] <- 0.99999;
+
   return(res);
 }
