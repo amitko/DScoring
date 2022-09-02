@@ -19,5 +19,8 @@ itemData = read.csv('item_scores.csv')
 
 
   # Latent
-
-  DS.estimateScorePC(itemData, PS, Fit$parameters)
+  library(bbmle)
+  library(tictoc)
+  tic("start")
+  ls = DS.estimateScorePC(itemData, PS, Fit$parameters)
+  toc()
