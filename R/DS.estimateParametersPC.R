@@ -1,7 +1,7 @@
 DS.estimateParametersPC <- function( itemData, dScores, itemParameters, o=DS.options() ) {
 
   idx = 1:ncol(itemData)
-  res = list(Parameters = matrix(ncol = 2, nrow = ncol(itemData)));
+  res = list(Parameters = matrix(ncol = 2, nrow = ncol(itemData)), SE = matrix(ncol = 2, nrow = ncol(itemData))  );
   for ( i in idx ) {
     bb = maxLik(logLik  = function(p) {mllklh_item( p, itemScores = itemData[,i], dScores, o )},
                 start = c('p' = c(itemParameters[i,1], itemParameters[i,2])),
@@ -15,6 +15,7 @@ DS.estimateParametersPC <- function( itemData, dScores, itemParameters, o=DS.opt
     );
 
     res$Parameters[i,] = bb$estimate;
+    res$SE[i,] = stdEr(bb);
   }
 
   return(res)

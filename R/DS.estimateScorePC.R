@@ -1,8 +1,8 @@
 DS.estimateScorePC <- function( itemData, dScores, itemParameters, o=DS.options() ) {
 
-  #idx = c(1000:2000)
+  #idx = c(1000:1010)
   idx = 1:nrow(itemData)
-  res = list(Dscore = matrix(ncol = 1, nrow = nrow(itemData)));
+  res = list(Dscore = matrix(ncol = 1, nrow = nrow(itemData)), SE = matrix(ncol = 1, nrow = nrow(itemData)));
 
     for ( i in idx ) {
     bb = maxLik(logLik  = function(d) {mllklh_score( d =  d, itemScores = itemData[i,], itemParameters, o )},
@@ -11,6 +11,7 @@ DS.estimateScorePC <- function( itemData, dScores, itemParameters, o=DS.options(
              );
 
   res$Dscore[i] = bb$estimate;
+  res$SE[i] = stdEr(bb);
   }
 
   return(res)
