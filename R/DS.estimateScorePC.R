@@ -1,11 +1,13 @@
 DS.estimateScorePC <- function( itemData, dScores, itemParameters, o=DS.options() ) {
 
+  #library(maxLik)
+
   #idx = c(1000:1010)
   idx = 1:nrow(itemData)
   res = list(Dscore = matrix(ncol = 1, nrow = nrow(itemData)), SE = matrix(ncol = 1, nrow = nrow(itemData)));
 
     for ( i in idx ) {
-    bb = maxLik(logLik  = function(d) {mllklh_score( d =  d, itemScores = itemData[i,], itemParameters, o )},
+    bb = maxLik::maxLik(logLik  = function(d) {mllklh_score( d =  d, itemScores = itemData[i,], itemParameters, o )},
               start = c('d' = dScores[i]),
               method = 'NR',
              );

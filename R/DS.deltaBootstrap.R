@@ -12,7 +12,7 @@ DS.deltaBootstrap <- function(itemData) {
   N   = nrow(itemData);
   colnames(ci) <- c('0.05','0.95');
   for(i in 1:ncol(itemData)) {
-    b<-boot(data=itemData[,i],statistic = bmean,1000);
+    b<-boot::boot(data=itemData[,i],statistic = bmean,1000);
     bm<-median(b$t);
     res[i,] = bm;
     ci[i,]  = quantile(b$t, probs = c(0.05, 0.95), names = FALSE);

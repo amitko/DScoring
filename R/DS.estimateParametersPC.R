@@ -1,9 +1,11 @@
 DS.estimateParametersPC <- function( itemData, dScores, itemParameters, o=DS.options() ) {
 
+  #library(maxLik)
+
   idx = 1:ncol(itemData)
-  res = list(Parameters = matrix(ncol = 2, nrow = ncol(itemData)), SE = matrix(ncol = 2, nrow = ncol(itemData))  );
+  res = list(Parameters = matrix(ncol = 2, nrow = ncol(itemData)), SE = matrix(ncol = 2, nrow = ncol(itemData)), MAD = matrix( matrix(ncol = 1, nrow = ncol(itemData)))  );
   for ( i in idx ) {
-    bb = maxLik(logLik  = function(p) {mllklh_item( p, itemScores = itemData[,i], dScores, o )},
+    bb = maxLik::maxLik(logLik  = function(p) {mllklh_item( p, itemScores = itemData[,i], dScores, o )},
                 start = c('p' = c(itemParameters[i,1], itemParameters[i,2])),
                 method = 'NM',
                 #                finalHessian = FALSE,
@@ -18,6 +20,7 @@ DS.estimateParametersPC <- function( itemData, dScores, itemParameters, o=DS.opt
     res$SE[i,] = stdEr(bb);
   }
 
+  res$MAD = DS.itemMAD(matrix(res$Parameters, ncol=2, nrow = ncol(itemData) ),DS.observedLogitDelta(itemData, dScores, o), o)
   return(res)
 
 }
