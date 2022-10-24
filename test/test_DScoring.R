@@ -1,7 +1,7 @@
 library("DScoring")
 
 # Load item response data
-  itemData = read.csv('item_scores.csv')
+  itemData = read.csv('item_scores.csv', header = FALSE)
 
 # Estimate of expected item difficulty ('delta')
   db<-DS.deltaBootstrap(itemData)

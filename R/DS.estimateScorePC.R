@@ -13,7 +13,7 @@ DS.estimateScorePC <- function( itemData, dScores, itemParameters, o=DS.options(
              );
 
   res$Dscore[i] = bb$estimate;
-  res$SE[i] = stdEr(bb);
+  res$SE[i] = miscTools::stdEr(bb);
   }
 
   return(res)
