@@ -17,7 +17,7 @@ DS.estimateParametersPC <- function( itemData, dScores, itemParameters, o=DS.opt
     );
 
     res$Parameters[i,] = bb$estimate;
-    res$SE[i,] = stdEr(bb);
+    res$SE[i,] = miscTools::stdEr(bb);
   }
 
   res$MAD = DS.itemMAD(matrix(res$Parameters, ncol=2, nrow = ncol(itemData) ),DS.observedLogitDelta(itemData, dScores, o), o)
