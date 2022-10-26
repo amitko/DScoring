@@ -12,8 +12,8 @@ DS.estimateParametersPC <- function( itemData, dScores, itemParameters, o=DS.opt
                 #                grad = NULL,
                 #                hess = NULL,
                 constraints = list('ineqA' = matrix(c(1,0,-1,0,0,1,0,-1),nrow = 4,ncol = 2,byrow = TRUE),
-                                   'ineqB' = matrix(c(0,1,0,5),nrow = 4,ncol = 1,byrow = TRUE)
-                                   ),
+                                   'ineqB' = matrix(c(.01,.99,0,5),nrow = 4,ncol = 1,byrow = TRUE)
+                                  )
     );
 
     res$Parameters[i,] = bb$estimate;
