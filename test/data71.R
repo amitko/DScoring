@@ -31,4 +31,4 @@ library("DScoring")
 
 # Estimate Latent DScores (only for RFM2)
   lDScores <- DS.estimateScorePC(itemData,PS, lParameters$Parameters, o)
-  write.csv(data.frame(lDScores$Dscore, lDScores$SE),"latent-DScores.csv")
+  write.csv(data.frame(lDScores$Dscore, lDScores$SE),"ltn-DScores.csv")
