@@ -6,6 +6,8 @@ DS.options <- function(){
                 "y ~ 1/(1+((((1-x)*b)/(x*(1-b)))^s))",
                 "y ~ c + ((1-c)/(1+(((1-x)*b)/(x*(1-b)))^s))"
                ),
-              "modelCoefficients" = c("b", "s", "c", "d")  
-              ));
+              "modelCoefficients" = c("b", "s", "c", "d"),
+              "bruteForceSstep" = 0.01
+              )
+        );
 }

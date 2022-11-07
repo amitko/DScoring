@@ -1,4 +1,4 @@
-DS.logitDeltaFit <- function(itemData,Dscore,o = DS.options() ) {
+DS.logitDeltaFit <- function(itemData,Dscore,o = DS.options(), algorithm = 'nls' ) {
 
   oldt = DS.observedLogitDelta(itemData,Dscore,o);
 
@@ -30,12 +30,21 @@ for (k in 1:ncol(oldt)) {
   tt[which(tt == 0)] = 0.001;
   dd = data.frame(o$dScale,tt);
   colnames(dd) <- c('x','y');
-  m<-nls(o$Models[o$model],data = dd,
-         start = startList,
-         lower = lowerList,
-         upper = upperList,
-         algorithm = "port"
-          );
+  if (algorithm == 'nls' ) {
+    m<-nls(o$Models[o$model],data = dd,
+           start = startList,
+           lower = lowerList,
+           upper = upperList,
+           algorithm = "port"
+            );
+  }
+  if (algorithm == 'nls2') {
+    st2<-expand.grid(b= db$delta, s=seq(lowerList$s, upperList$s ,o$bruteForceSstep))
+    m<-nls2(o$Models[o$model],data = dd,
+            start = st2,
+            algorithm = "brute-force"
+            );
+  }
   models[[k]] = m;
   params[k,] = summary(m)$coefficients[,1];
   params_se[k,] = summary(m)$coefficients[,2];

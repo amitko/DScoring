@@ -17,9 +17,9 @@ library("DScoring")
   o$model = 2
 
 # Estimate item parameters (nonlinear RFM regression)
-  Fit<-DS.logitDeltaFit(itemData,Dscore = PS,o)
+  Fit<-DS.logitDeltaFit(itemData,Dscore = PS,o,algorithm = 'nls2')
   Fit
-  write.csv(data.frame(Fit$parameters, Fit$SE, Fit$MAD),"item-parameters.csv")
+  write.csv(data.frame(Fit$parameters, Fit$SE, Fit$MAD),"item-parameters2.csv")
 
 # Compute true D-scores
   TS<-DS.trueScore(deltas = db$delta, parameters = Fit$parameters, Dscore = PS)

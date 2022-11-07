@@ -1,23 +1,26 @@
-DS.estimatePC <- function( itemData, o=DS.options() ) {
+DS.estimatePC <- function( itemData, DScore = NULL, itemDelta = NULL, start = list("parameters" = NULL, "DScores"=NULL) ,o=DS.options() ) {
 
-o$model = 2;
+  if ( is.null(itemDelta) ) {
+    db<-DS.deltaBootstrap(itemData)
+    itemDelta = db$delta
+  }
 
-# init values
-b = rep(0.5,ncol(itemData));
-s = rep(1,ncol(itemData));
-d = rep(0.5,nrow(itemData));
+  if ( is.null( DScore ) ) {
+    DScore<-DS.personDscore(itemData,db$delta)
+  }
 
-res = 0;
-  for ( n in 1:nrow(itemData) ) {
-	  for ( j in 1:ncol(itemdata) ) {
-		  res = itemData[n,j]*logProb(d[n],b[j],s[x]) - log(1 + exp(logProb(d[n],b[j],s[x])));
-	  }
-  }		  
+  if (is.null(start$parameters) ) {
+    fit<-DS.logitDeltaFit(itemData,DScore,o)
+    start$parameters = fit$parameters;
+  }
 
-  return(res);
-}
+  if ( is.null(start$DScores )) {
+    start$DScores = DScore;
+  }
+  LatentParameters <- DS.estimateParametersPC(itemData, DScore, start$parameters, o)
+  LatentDScores <- DS.estimateScorePC(itemData,start$DScore, LatentParameters$Parameters, o)
 
-logProb <- function(theta, b, s) {
-	res = log(1 + ( (1-theta) /theta) )^s + (b/(1-b))^s;
-	return(res);
+  return(list("Persons" = LatentDScores,
+              "Items"   = LatentParameters
+              ))
 }

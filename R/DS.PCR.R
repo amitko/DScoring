@@ -17,10 +17,10 @@ DS.PCR <- function(parameters,Dscore,o = dS.options()) {
       res[k,] = 1 / ( 1 + ((1-d)*p1) / ((1 - p1) * d));
     }
     if ( o$model == 2){
-      res[k,] = 1 / ( 1 + ((1-d)*p1) / ((1 - p1) * d)^p2);
+      res[k,] = 1 / ( 1 + (((1-d)*p1) / ((1 - p1) * d))^p2);
     }
     if ( o$model == 3){
-      res[k,] = p3 + (1-p3)*(1 / ( 1 + ((1-d)*p1) / ((1 - p1) * d)^p2));
+      res[k,] = p3 + (1-p3)*(1 / ( 1 + (((1-d)*p1) / ((1 - p1) * d))^p2));
     }
   }
 
