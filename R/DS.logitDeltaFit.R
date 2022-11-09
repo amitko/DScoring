@@ -40,7 +40,7 @@ for (k in 1:ncol(oldt)) {
   }
   if (algorithm == 'nls2') {
     st2<-expand.grid(b= db$delta, s=seq(lowerList$s, upperList$s ,o$bruteForceSstep))
-    m<-nls2(o$Models[o$model],data = dd,
+    m<-nls2::nls2(o$Models[o$model],data = dd,
             start = st2,
             algorithm = "brute-force"
             );

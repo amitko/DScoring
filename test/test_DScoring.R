@@ -6,7 +6,6 @@ library("DScoring")
 # Estimate of expected item difficulty ('delta')
   db<-DS.deltaBootstrap(itemData)
   db
-  write.csv(db,"delta.csv")
 
 # Compute classical D-scores
   PS<-DS.personDscore(itemData,db$delta)
@@ -17,9 +16,8 @@ library("DScoring")
   o$model = 2
 
 # Estimate item parameters (nonlinear RFM regression)
-  Fit<-DS.logitDeltaFit(itemData,Dscore = PS,o,algorithm = 'nls2')
+  Fit<-DS.logitDeltaFit(itemData,Dscore = PS,o)
   Fit
-  write.csv(data.frame(Fit$parameters, Fit$SE, Fit$MAD),"item-parameters2.csv")
 
 # Compute true D-scores
   TS<-DS.trueScore(deltas = db$delta, parameters = Fit$parameters, Dscore = PS)
