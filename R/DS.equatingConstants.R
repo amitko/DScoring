@@ -1,7 +1,7 @@
 DS.equatingConstants <- function(baseTestDeltas, newTestDeltas, commonItems = NULL)
 {
-  baseTestDeltas[which(baseTestDeltas == 0)] = 0.001
-  newTestDeltas[which(newTestDeltas == 0)]   = 0.001
+  baseTestDeltas[which(baseTestDeltas == 0 | is.na(baseTestDeltas) ) ] = 0.001
+  newTestDeltas[which(newTestDeltas == 0 | is.na(newTestDeltas) )]   = 0.001
 
   baseTestDeltas[which(baseTestDeltas == 1)] = 0.999
   newTestDeltas[which(newTestDeltas == 1)]   = 0.999
