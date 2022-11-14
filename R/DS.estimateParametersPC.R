@@ -49,9 +49,9 @@ DS.estimateParametersPC <- function( itemData, dScores, itemParameters, o=DS.opt
 
 mllklh_item <- function( p, itemScores, Dscores, o) {
 
-  pp = matrix(p, nrow = 1, ncol = 2);
-  ff = (1-itemScores) * p[2]* log( hII(Dscores,p[1] )) - log(1 + hII(Dscores,p[1])^p[2]);
-  return( sum(ff[!is.nan(ff) ] ));
+  pp = matrix(p, nrow = 1, ncol = 2)
+  ff = (1-itemScores) * p[2]* log( hII(Dscores,p[1] )) - log(1 + hII(Dscores,p[1])^p[2])
+  return( sum(ff[!is.nan(ff) ] ))
 }
 
 
