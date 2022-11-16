@@ -19,5 +19,8 @@ DS.rescaleRFM <- function(NewTestParams,BaseTestParams,commonItems,o = DS.option
   if ( ncol(NewTestParams) > 2 ) {
     NewTestRescaled[,3] = NewTestParams[,3]
   }
+
+  return(NewTestRescaled)
+
 }
 
