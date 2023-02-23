@@ -1,4 +1,4 @@
-DS.PCR <- function(parameters,Dscore,o = dS.options()) {
+DS.PCR <- function(parameters,Dscore,o = DS.options()) {
 
   res = matrix(nrow = nrow(Dscore),ncol = nrow(parameters));
 
