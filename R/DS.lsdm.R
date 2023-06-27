@@ -1,5 +1,11 @@
 DS.lsdm <- function(itemPerformance, Q, type) {
 
+# Calculates attribute performance according LSDM methodology
+# D. M. Dimitrov, D. V. Atanasov Conjunctive and Disjunctive Extensions
+# of the Least Squares Distance Model of Cognitive Diagnosis. Educational
+# andPsychologicalMeasurement.XX(X).2011.1–19.IF: 1.639WebOFScience, 
+# DOI: 10.1177/0013164411402324, ISSN: 0013-1644
+
   if (type == 1) {
     a = 0;
     b = 0;
