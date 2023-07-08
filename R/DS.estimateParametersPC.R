@@ -1,12 +1,14 @@
 DS.estimateParametersPC <- function( itemData, dScores, itemParameters, o=DS.options() ) {
 
-  #library(maxLik)
 
   b_lim_min = 0.01;
   b_lim_max = 0.99;
 
   s_lim_min = 0.01;
   s_lim_max = 5;
+
+  itemParameters[itemParameters[,1] > 0.95, 1] <- 0.95
+  itemParameters[itemParameters[,1] < 0.05, 1] <- 0.05
 
   idx = 1:ncol(itemData)
   res = list(Parameters = matrix(ncol = 2, nrow = ncol(itemData)), SE = matrix(ncol = 2, nrow = ncol(itemData)), MAD = matrix( matrix(ncol = 1, nrow = ncol(itemData)))  );
