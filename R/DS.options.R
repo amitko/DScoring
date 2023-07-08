@@ -7,7 +7,8 @@ DS.options <- function(){
                 "y ~ c + ((1-c)/(1+(((1-x)*b)/(x*(1-b)))^s))"
                ),
               "modelCoefficients" = c("b", "s", "c", "d"),
-              "bruteForceSstep" = 0.01
+              "bruteForceSstep" = 0.01,
+              "plausibleValues" = 10
               )
         );
 }

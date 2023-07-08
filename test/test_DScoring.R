@@ -30,3 +30,16 @@ library("DScoring")
 # Estimate Latent DScores (only for RFM2)
   lDScores <- DS.estimateScorePC(itemData,PS, lParameters$Parameters, o)
   write.csv(data.frame(lDScores$Dscore, lDScores$SE),"latent-DScores.csv")
+
+
+
+# Test LSDM
+  itemData = read.csv('test/lsdm/scores.csv', header = FALSE)
+  Q = read.csv('test/lsdm/Q1.csv', header = FALSE)
+  db<-DS.deltaBootstrap(itemData)
+  PS<-DS.personDscore(itemData,db$delta)
+  o=DS.options()
+  Fit<-DS.logitDeltaFit(itemData,Dscore = PS,o,algorithm = 'nls2')
+#  lParameters <- DS.estimateParametersPC(itemData, PS, Fit$parameters, o)
+  itemPerformance = DS.PCR(as.matrix(Fit$parameters),as.matrix(o$dScale, ncol = 1))
+  attrPerformance<-DS.lsdm(itemPerformance,Q,1)
