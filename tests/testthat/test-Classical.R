@@ -1,14 +1,12 @@
 test_that("bootstrapping Deltas",{
 
-itemData = read.csv('item_scores.csv')
-
-db<-DS.deltaBootstrap(itemData)
+db<-DS.deltaBootstrap(DS.data.itemScores)
 db
-PS<-DS.personDscore(itemData,db$delta)
+PS<-DS.personDscore(DS.data.itemScores,db$delta)
 PS
-Fit<-DS.logitDeltaFit(itemData = itemData,Dscore = PS$Dscores)
+Fit<-DS.logitDeltaFit(itemData = DS.data.itemScores,Dscore = PS)
 expect_type(db,'list')
-expect_type(PS,'list')
+expect_type(PS,'double')
 expect_type(Fit,'list')
 }
 )
