@@ -1,16 +1,14 @@
-DS.aposteriorLikelihood <- function (itemResponse, itemParameters, DScore, priorProbability ,priorDistribution ,o=DS.options() ) {
+DS.aposteriorLikelihood <- function (itemResponse, itemParameters, priorDistribution ,o=DS.options() ) {
 
-  if (nrow(itemResponse) != nrow(DScore) | nrow(DScore) != nrow(priorProbability)) {
-    stop("itemResponse and DScore and priorProbability rows should match")
-  }
-
-  res <- matrix(nrow = nrow(DScore),ncol = 1);
-  for (k in 1:nrow(DScore)) {
-    lklh     <- DS.likelihood(as.numeric(itemResponse[k,]), itemParameters, as.matrix(DScore[k,1]), o)
-    lklhB    <- DS.likelihood(as.numeric(itemResponse[k,]), itemParameters, as.matrix(priorDistribution$values),o)
+  res <- matrix(ncol = length(priorDistribution$values),nrow = 1);
+  #for ( k in 1:length(priorDistribution$values) ) {
+    #lklh     <- DS.likelihood(as.numeric(itemResponse[k,]), itemParameters, as.matrix(DScore[k,1]), o)
+    #lklhB    <- DS.likelihood(as.numeric(itemResponse[k,]), itemParameters, as.matrix(priorDistribution$values),o)
+    lklhB    <- DS.likelihood(as.numeric(itemResponse), itemParameters, as.matrix(priorDistribution$values),o)
     den      <- sum(lklhB*priorDistribution$probs)
-    res[k,1] <- lklh * priorProbability[k] / den
-  }
+    #res[k,1] <- lklhB * priorDistribution$probs / den
+    res <- lklhB * priorDistribution$probs / den
+  #}
 
   return(res)
 
