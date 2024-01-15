@@ -4,7 +4,7 @@ DS.aposteriorPlausibleValues <- function(itemResponse, DScores,itemParameters,op
   d = options$dScale
 
   # fit beta prior beta distribution
-  fit <- fitdist(DScores[,1],distr = "beta", method = "mme")
+  fit <- fitdistrplus::fitdist(DScores[,1], distr =  "beta", method = "mme")
 
   # prior distribution at beans
   g = list()
@@ -17,19 +17,15 @@ DS.aposteriorPlausibleValues <- function(itemResponse, DScores,itemParameters,op
   res$plausibleValues <- matrix(nrow = nrow(itemResponse), ncol = options$plausibleValues)
   for (k in 1:nrow(itemResponse)) {
 
-    print(k)
+    #print(k)
     personResponse <- itemResponse[k,]
     pR <- matrix(rep(personResponse, length(g$values)),
                  ncol=ncol(itemResponse),
                  byrow=T
                 )
-    DS <- matrix(rep(DScores[k], length(g$values)),
-                 ncol = 1,
-                 byrow = T
-                 )
 
     res$posteriorDistribution[k,] <- DS.aposteriorLikelihood(personResponse,itemParameters,g)
-    res$plausibleValues[k,] <- sample(g$values,options$plausibleValues,prob = res$posteriorDistribution[k,])
+    res$plausibleValues[k,] <- sample(g$values,options$plausibleValues,prob = res$posteriorDistribution[k,], replace=TRUE)
   }
 
 
