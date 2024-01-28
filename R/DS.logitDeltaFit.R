@@ -35,11 +35,12 @@ for (k in 1:ncol(oldt)) {
            start = startList,
            lower = lowerList,
            upper = upperList,
+           control = list(maxiter = 50000, minFactor = 1/2000, warnOnly = TRUE),
            algorithm = "port"
             );
   }
   if (algorithm == 'nls2') {
-    st2<-expand.grid(b= db$delta, s=seq(lowerList$s, upperList$s ,o$bruteForceSstep))
+    st2<-expand.grid(b=seq(0.01, 0.99 ,o$bruteForceSstep) , s=seq(lowerList$s, upperList$s ,o$bruteForceSstep))
     m<-nls2::nls2(o$Models[o$model],data = dd,
             start = st2,
             algorithm = "brute-force"

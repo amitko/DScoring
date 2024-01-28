@@ -25,7 +25,13 @@ DS.aposteriorPlausibleValues <- function(itemResponse, DScores,itemParameters,op
                 )
 
     res$posteriorDistribution[k,] <- DS.aposteriorLikelihood(personResponse,itemParameters,g)
-    res$plausibleValues[k,] <- sample(g$values,options$plausibleValues,prob = res$posteriorDistribution[k,], replace=TRUE)
+    pp = res$posteriorDistribution[k,]
+    pp[which(is.nan(pp))] = 0.01
+    res$plausibleValues[k,] <- sample(g$values,options$plausibleValues,
+                                      prob = pp,
+                                      replace=TRUE
+                                      )
+
   }
 
 
