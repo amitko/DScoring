@@ -1,7 +1,8 @@
 DS.aposteriorPlausibleValues <- function(itemResponse, DScores,itemParameters,options = DS.options())
 {
   res = list()
-  d = options$dScale
+  #d = options$dScale
+  d = DScores[,1]
 
   # fit beta prior beta distribution
   #fit <- fitdistrplus::fitdist(DScores[,1], distr =  "beta", method = "mme")
