@@ -45,7 +45,7 @@ DS.aposteriorPlausibleValues <- function(itemResponse, DScores,itemParameters,op
 
 
 beta_parameters <- function(m,s2) {
-  a = m*(((m*(1-m))/(s2))-1)
+  a = m*( ( ( m*(1-m)) / (s2) ) - 1 )
   b = ((1-m)/m)*a
   return(c(a,b))
 }
