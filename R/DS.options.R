@@ -8,7 +8,8 @@ DS.options <- function(){
                ),
               "modelCoefficients" = c("b", "s", "c", "d"),
               "bruteForceSstep" = 0.01,
-              "plausibleValues" = 10
+              "plausibleValues" = 10,
+              "plausibleValuesDistribution" = 'beta'
               )
         );
 }
