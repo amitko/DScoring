@@ -21,9 +21,9 @@ DS.plausibleValues <- function(DScores,SE,options = DS.options())
           }
 
           if ( options$plausibleValuesDistribution == 'logitNormal' ) {
-            T = ln( m/(1-m))
+            T = log( m/(1-m))
             seT = SE[k]/sqrt(m*(1-m))
-            res[k,] = rlogitnorm(n = options$plausibleValues, mu = T, sigma = seT)*kk
+            res[k,] = logitnorm::rlogitnorm(n = options$plausibleValues, mu = T, sigma = seT)*kk
           }
 
         }
