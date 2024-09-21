@@ -12,7 +12,7 @@ DS.estimateScorePC <- function( itemData, dScores, itemParameters, o=DS.options(
       res$SE[i] = 0
       next
     }
-    if (sum(as.numeric(itemData[i,])) == ncol(itemData[i,]) ) {
+    if (sum(as.numeric(itemData[i,])) == length(itemData[i,]) ) {
       res$Dscore[i] = 1
       res$SE[i] = 0
       next
