@@ -1,0 +1,7 @@
+DS.aposteriorPersonDistribution <- function (DScore, ResponsePattern, itemParameters, priorDistribution ,o=DS.options() ) {
+
+
+lklhB    <- DS.likelihood(as.numeric(ResponsePattern), itemParameters, DScore, o)
+
+
+}
