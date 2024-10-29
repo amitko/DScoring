@@ -13,7 +13,7 @@ DS.plausibleValues <- function(DScores,SE,options = DS.options())
           if ( options$plausibleValuesDistribution == 'beta' ) {
             a = m*(((m*(1-m))/(s2))-1);
             b = ((1-m)/m)*a;
-            res[k,] = rbeta(options$plausibleValues, a, b)*kk;
+            res[k,] = rbeta(options$plausibleValues, a, b);
             if (any(is.nan(res[k,]))) {
               print(m)
               print(s2)
@@ -23,7 +23,7 @@ DS.plausibleValues <- function(DScores,SE,options = DS.options())
           if ( options$plausibleValuesDistribution == 'logitNormal' ) {
             T = log( m/(1-m))
             seT = SE[k]/sqrt(m*(1-m))
-            res[k,] = logitnorm::rlogitnorm(n = options$plausibleValues, mu = T, sigma = seT)*kk
+            res[k,] = logitnorm::rlogitnorm(n = options$plausibleValues, mu = T, sigma = seT)
           }
 
         }
