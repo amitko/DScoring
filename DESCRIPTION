@@ -1,7 +1,7 @@
 Package: DScoring
 Type: Package
 Title: D-Scoring
-Version: 0.1.0
+Version: 1.1.0
 Author: Dimitar Atanasov
 Maintainer: Dimitar Atanasov <datanasov@nbu.bg>
 Description: D-Scoring approach for test evaluation
