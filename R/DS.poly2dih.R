@@ -3,7 +3,7 @@ DS.poly2dih <- function(Response)
 
   DIHscores <- matrix(nrow = nrow(Response), ncol = 0)
   Poly <- list(Labels = c(),
-               Items = c()
+               Items = list()
                )
   Org <- list( Labels = c(),
                isPoly = matrix(ncol = ncol(Response), nrow = 1)
@@ -12,7 +12,7 @@ DS.poly2dih <- function(Response)
   for ( k in 1:ncol(Response) )
     {
     if ( all( Response[,k] %in% c(0, 1) ) )  # dihotomous
-    {  
+    {
       DIHscores <- rbind(DIHscores, Response[,k])
       Poly$Labels <- c(Poly$Labels, paste(as.character(c), '-Q', as.character(k)));
       p <- list( is = 0,
@@ -33,13 +33,13 @@ DS.poly2dih <- function(Response)
         pp <- c(pp, ncol(DIHscores))
         c <- c+1
       }
-      Org$Labels = c(Org$Labels, paste('+Q', as.character(k)))
+      Org$Labels = c(Org$Labels, paste('+Q', as.character(k), sep = ''))
       Org$isPoly[1,k] <- 1
       p <- list( is = 1,
                  items = pp
       )
-      Poly$Items <- c(Poly$Items, p)
-    }  
+      Poly$Items[[k]] <- p
+    }
   }
 
   colnames(DIHscores) <- Poly$Labels
@@ -47,5 +47,5 @@ DS.poly2dih <- function(Response)
                Poly = Poly,
                Org = Org
                )
-          )  
+          )
 }
