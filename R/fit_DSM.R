@@ -1,5 +1,5 @@
 # ======= Fit DSM classic and latent =========
-fit_DSM <- function(no_output = FALSE, inputFile = NULL)
+fit_DSM <- function(no_output = FALSE, inputFile = NULL, plots = FALSE)
 {
 library(tools)
 
@@ -16,19 +16,28 @@ if ( is.null(inputFile)) {
 if ( all(sapply(data[,-1], function(x) all(x %in% c(0,1))) ) )   # dichotomous
 {
    itemData <- data[,-1]
+   Poly <- NULL
+   OL <- names(itemData)
 } else {    # polytpmous
-   itemData <- DS.poly2dih(data[,-1])$Response
+   itemDataD <- DS.poly2dih(data[,-1])
+   itemData <- data.frame(itemDataD$Response)
+   colnames(itemData) <- itemDataD$Poly$Labels
+   Poly <- itemDataD$Poly$Items
+   OL <- itemDataD$Org$Labels
 }
 
 # ================ FIT DATA ===============
 itemDelta  <- DS.deltaBootstrap(itemData)
 DScore     <- DS.personDscore(itemData, itemDelta$delta)
+fit <- NULL
 itemParams <- tryCatch(
   {
-    DS.estimateParametersPC(itemData, DScore, DS.logitDeltaFit(itemData,DScore)$parameters)
+    fit <- DS.logitDeltaFit(itemData,DScore)
+    DS.estimateParametersPC(itemData, DScore, fit$parameters)
     #when it throws an error, the following block catches the error
   }, error = function(msg){
     # try with different start point
+    fit <- NULL
     sp <- matrix(c(rep(0.5,ncol(itemData)), rep(1,ncol(itemData))), nrow = ncol(itemData), byrow = FALSE)
     DS.estimateParametersPC(itemData, DScore, sp)
   })
@@ -46,7 +55,7 @@ DScoreL <- tryCatch(
 colnames(itemParams$Parameters) <- c('b','s')
 colnames(itemParams$SE) <- c('SE_b','SE_s')
 
-itemRES <- data.frame( Item    = names(data[,-1]),
+itemRES <- data.frame( Item    = names(itemData),
                         delta   = itemDelta$delta,
                         dSE     = itemDelta$se,
                         iP      = itemParams$Parameters,
@@ -63,6 +72,37 @@ if ( ! no_output )
   write.table(itemRES,paste(file_path_sans_ext(inputFile),'_items.csv',sep = ''), sep = ",", row.names = FALSE)
   write.table(personRES,paste(file_path_sans_ext(inputFile),'_persons.csv',sep = ''), sep = ",", row.names = FALSE)
 }
+
+if ( plots ) {
+
+  if ( is.null(Poly) )  # Dichotomous
+  {
+    if ( !is.null(fit) )
+    {
+    for ( k in 1:nrow(itemRES) ) {
+      png(filename = paste(file_path_sans_ext(inputFile),'-', as.character(itemRES[k,1]) ,'.png',sep = '') )
+      DS.logitDeltaPlot(Fit = fit, items = k)
+      dev.off()
+    }
+    } else {
+      message("Plots unavailable!!!")
+    }
+  }
+  else
+  {
+    for ( k in 1:length(Poly) ) {
+      png(filename = paste(file_path_sans_ext(inputFile) ,OL[k], '-CCR.png',sep = '') )
+      DS.polyCCR(itemParameters = itemRES[Poly[[k]]$items,c(4,5)])
+      dev.off()
+      png(filename = paste(file_path_sans_ext(inputFile) ,OL[k], '-SCR.png',sep = '') )
+      DS.polySCR(itemParameters = itemRES[Poly[[k]]$items,c(4,5)])
+      dev.off()
+    }
+  }
+  }
+
+
+
 return(
   list(items   = itemRES,
        persons = personRES
