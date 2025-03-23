@@ -1,6 +1,5 @@
 DS.PCR <- function(parameters,Dscore,o = DS.options()) {
 
-  nrow = nrow(Dscore)
   res = matrix(nrow = nrow(Dscore),ncol = nrow(parameters));
 
   if ( o$model >= 1)
