@@ -51,6 +51,11 @@ DScoreL <- tryCatch(
   }
 )
 
+Aberrant <- list( U = DS.personFitU(DScoreL$Dscore, item_parameters = itemParams$Parameters, item_response = itemData),
+                  Z = DS.personFitIndexZ(personLikelihood = DS.personLikelihood(DScoreL$Dscore,item_parameters = itemParams$Parameters, item_response = itemData))
+                )
+
+
 # ============== PREPARE RESULTS ==========
 colnames(itemParams$Parameters) <- c('b','s')
 colnames(itemParams$SE) <- c('SE_b','SE_s')
@@ -65,7 +70,10 @@ itemRES <- data.frame( Item    = names(itemData),
 personRES <- data.frame( PersonID = data[,1],
                           DScore   = DScore,
                           DScoreL  = DScoreL$Dscore,
-                          DScoreSE = DScoreL$SE
+                          DScoreSE = DScoreL$SE,
+                          IndexU   = Aberrant$U,
+                          IndexZ   = Aberrant$Z$Z,
+                          Aberrant = Aberrant$Z$index
                           )
 if ( ! no_output )
 {
