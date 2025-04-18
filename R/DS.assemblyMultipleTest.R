@@ -164,6 +164,7 @@ DS.assemblyMultipleTest <- function( nOfTests, nOfItems, itemDeltas,
                                            targetFunction = f,
                                            meanOfDeltasTolerance = meanOfDeltasTolerance,
                                            meanOfDeltas = meanOfDeltas,
+                                           deltaDistribution = deltaDistribution
                                            )
     if ( is.null(inCurrentTest) )
     {

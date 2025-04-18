@@ -7,7 +7,7 @@ DS.assemblySingleTest <- function(nOfItems, itemDeltas,
                                   addInequalitiesLHS = NULL,
                                   addInequalitiesRHS = NULL,
                                   meanOfDeltas = NULL,
-                                  meanOfDeltasTolerance = NULL,
+                                  meanOfDeltasTolerance = 0.3,
                                   deltaDistribution = NULL,
                                   targetFunction = rep(1,numItems)
                                   )
@@ -19,6 +19,12 @@ DS.assemblySingleTest <- function(nOfItems, itemDeltas,
   ub <- rep(1,numItems)
 
   IntCon <- 1:numItems
+
+  #if ( is.null(meanOfDeltas) ) {
+  #  w = seq(from = 0, to = 1, by = 1/(length(deltaDistribution)-1) )
+  #  meanOfDeltas <- weighted.mean(w,deltaDistribution)
+
+  #}
 
   # === Equality constraints ====
 
@@ -32,14 +38,15 @@ DS.assemblySingleTest <- function(nOfItems, itemDeltas,
   A <- matrix(nrow = 0, ncol = length(itemDeltas))
   b <- c();
 
-  # sum of deltas greater then the meanOfDeltas - meanOfDeltasTolerance;
+  if (!is.null(meanOfDeltas)) {
+    # sum of deltas greater then the meanOfDeltas - meanOfDeltasTolerance;
+    A <- rbind(A, -itemDeltas / nOfItems);
+    b <- c(b, -meanOfDeltas + meanOfDeltasTolerance);
 
-  A <- rbind(A, -itemDeltas / nOfItems);
-  b <- c(b, -meanOfDeltas + meanOfDeltasTolerance);
-
-  # sum of deltas less then the meanOfDeltas + sumOfDeltasTolerance;
-  A <- rbind(A, itemDeltas / nOfItems);
-  b <- c(b, +meanOfDeltas + meanOfDeltasTolerance);
+    # sum of deltas less then the meanOfDeltas + sumOfDeltasTolerance;
+    A <- rbind(A, itemDeltas / nOfItems);
+    b <- c(b, +meanOfDeltas + meanOfDeltasTolerance);
+  }
 
   # excluded items forced to be 0 : Ax = 0
   if ( !is.null(excludedItems) )
@@ -52,7 +59,7 @@ DS.assemblySingleTest <- function(nOfItems, itemDeltas,
 
   if ( !is.null(deltaDistribution) )
   {
-    if ( colSums(deltaDistribution) != nOfItems )
+    if ( rowSums(deltaDistribution) != nOfItems )
     {
       stop("Distribution of deltas does not match nOfItems")
     }
@@ -65,10 +72,10 @@ DS.assemblySingleTest <- function(nOfItems, itemDeltas,
 
     #expectedMeanDelta <- (deltaDistribution ./ nOfItems) * ((0:(nRange - 1)) /(nRange - 1))';
 
-    for ( k in 0:nRange-1)
+    for ( k in 0:(nRange-1))
     {
       AA <- rep(0, numItems)
-      itemsInRange <- which(itemDeltas > k/nRange && itemDeltas <= (k+1)/ nRange)
+      itemsInRange <- which(itemDeltas > k/nRange & itemDeltas <= (k+1)/ nRange)
       AA[itemsInRange] <- 1
       Ae <- rbind(Ae, AA)
       be <- c(be, deltaDistribution[k+1] )
