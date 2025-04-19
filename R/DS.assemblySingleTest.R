@@ -20,12 +20,6 @@ DS.assemblySingleTest <- function(nOfItems, itemDeltas,
 
   IntCon <- 1:numItems
 
-  #if ( is.null(meanOfDeltas) ) {
-  #  w = seq(from = 0, to = 1, by = 1/(length(deltaDistribution)-1) )
-  #  meanOfDeltas <- weighted.mean(w,deltaDistribution)
-
-  #}
-
   # === Equality constraints ====
 
   # number of items in the test
