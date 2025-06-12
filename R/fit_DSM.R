@@ -1,16 +1,19 @@
 # ======= Fit DSM classic and latent =========
-fit_DSM <- function(no_output = FALSE, inputFile = NULL, plots = FALSE)
+fit_DSM <- function(no_output = FALSE, inputFile = NULL, plots = FALSE, itemData = NULL)
 {
 library(tools)
 
 # ================ READ DATA =============
-if ( is.null(inputFile)) {
-  message("Choose RESPONSE data file. First column is PersonID and there is a HEADER ROW!!!")
-  inputFile <- file.choose()
+if (is.null(itemData)) {
+	if ( is.null(inputFile)) {
+		message("Choose RESPONSE data file. First column is PersonID and there is a HEADER ROW!!!")
+		inputFile <- file.choose()
+	}
+	data <- read.csv(file = inputFile, header = TRUE)
+} 
+else {
+	data <- itemData
 }
-
-  data <- read.csv(file = inputFile, header = TRUE)
-
 
 # ================ CHECK DATA =============
 if ( all(sapply(data[,-1], function(x) all(x %in% c(0,1))) ) )   # dichotomous
@@ -83,37 +86,36 @@ if ( ! no_output )
 
 if ( plots ) {
 
-  if ( is.null(Poly) )  # Dichotomous
-  {
-    if ( !is.null(fit) )
+for ( k in 1:length(itemDataD$Poly$Items) ) {
+    if ( itemDataD$Poly$Items[[k]]$is == 0 )  # Dichotomous
     {
-    for ( k in 1:nrow(itemRES) ) {
-      png(filename = paste(file_path_sans_ext(inputFile),'-', as.character(itemRES[k,1]) ,'.png',sep = '') )
-      DS.logitDeltaPlot(Fit = fit, items = k)
-      dev.off()
+      if ( !is.null(fit) )
+      {
+        png(filename = paste(file_path_sans_ext(inputFile),'-', OL[k] ,'.png',sep = '') )
+        DS.logitDeltaPlot(Fit = fit, items = k)
+        dev.off()
+      } else {
+        message("Plots unavailable!!!")
+      }
     }
-    } else {
-      message("Plots unavailable!!!")
+    else
+    {
+        png(filename = paste(file_path_sans_ext(inputFile) ,OL[k], '-CCR.png',sep = '') )
+        DS.polyCCR(itemParameters = itemRES[Poly[[k]]$items,c(4,5)])
+        dev.off()
+        png(filename = paste(file_path_sans_ext(inputFile) ,OL[k], '-SCR.png',sep = '') )
+        DS.polySCR(itemParameters = itemRES[Poly[[k]]$items,c(4,5)])
+        dev.off()
     }
-  }
-  else
-  {
-    for ( k in 1:length(Poly) ) {
-      png(filename = paste(file_path_sans_ext(inputFile) ,OL[k], '-CCR.png',sep = '') )
-      DS.polyCCR(itemParameters = itemRES[Poly[[k]]$items,c(4,5)])
-      dev.off()
-      png(filename = paste(file_path_sans_ext(inputFile) ,OL[k], '-SCR.png',sep = '') )
-      DS.polySCR(itemParameters = itemRES[Poly[[k]]$items,c(4,5)])
-      dev.off()
-    }
-  }
-  }
+}  
 
 
 
 return(
   list(items   = itemRES,
-       persons = personRES
+       persons = personRES,
+       poly    = itemDataD$Poly$Items
        )
-)
+      )
+}
 }

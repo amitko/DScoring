@@ -9,17 +9,20 @@ DS.poly2dih <- function(Response)
                isPoly = matrix(ncol = ncol(Response), nrow = 1)
               )
   c <- 1
+  
+  cn <- colnames(Response)
+  
   for ( k in 1:ncol(Response) )
     {
     if ( all( Response[,k] %in% c(0, 1) ) )  # dihotomous
     {
-      DIHscores <- rbind(DIHscores, Response[,k])
-      Poly$Labels <- c(Poly$Labels, paste(as.character(c), '-Q', as.character(k)));
+      DIHscores <- cbind(DIHscores, Response[,k])
+      Poly$Labels <- c(Poly$Labels, paste(as.character(c), '-', cn[k] , '-' , as.character(k)));
       p <- list( is = 0,
                  items = c
                 )
-      Poly$Items <- c(Poly$Items, p)
-      Org$Labels <- c(Org$Labels, paste('Q', as.character(k)))
+      Poly$Items[[k]] <- p
+      Org$Labels <- c(Org$Labels, paste(cn[k] , as.character(k)))
       Org$isPoly[1,k] <- 0
       c <- c+1
     } else {      #polytomous
@@ -29,11 +32,11 @@ DS.poly2dih <- function(Response)
       {
         Correct <- as.integer(Response[,k] >= l)
         DIHscores <- cbind( DIHscores, Correct)
-        Poly$Labels =  c(Poly$Labels, paste(as.character(c), '-Q', as.character(k), '[', as.character(l), ']', sep = ''))
+        Poly$Labels =  c(Poly$Labels, paste(as.character(c), '-', cn[k] , '-' , as.character(k), '[', as.character(l), ']', sep = ''))
         pp <- c(pp, ncol(DIHscores))
         c <- c+1
       }
-      Org$Labels = c(Org$Labels, paste('+Q', as.character(k), sep = ''))
+      Org$Labels = c(Org$Labels, paste('+', cn[k], ' ', as.character(k), sep = ''))
       Org$isPoly[1,k] <- 1
       p <- list( is = 1,
                  items = pp
