@@ -10,7 +10,7 @@ if (is.null(itemData)) {
 		inputFile <- file.choose()
 	}
 	data <- read.csv(file = inputFile, header = TRUE)
-} 
+}
 else {
 	data <- itemData
 }
@@ -21,6 +21,7 @@ if ( all(sapply(data[,-1], function(x) all(x %in% c(0,1))) ) )   # dichotomous
    itemData <- data[,-1]
    Poly <- NULL
    OL <- names(itemData)
+   itemDataD <- DS.poly2dih(data[,-1])
 } else {    # polytpmous
    itemDataD <- DS.poly2dih(data[,-1])
    itemData <- data.frame(itemDataD$Response)
@@ -107,7 +108,7 @@ for ( k in 1:length(itemDataD$Poly$Items) ) {
         DS.polySCR(itemParameters = itemRES[Poly[[k]]$items,c(4,5)])
         dev.off()
     }
-}  
+}
 
 
 
