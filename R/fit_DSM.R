@@ -55,6 +55,8 @@ DScoreL <- tryCatch(
   }
 )
 
+TrueScore <- DS.trueScore(deltas = itemDelta$delta,parameters = itemParams$Parameters, Dscore = DScore)
+
 Aberrant <- list( U = DS.personFitU(DScoreL$Dscore, item_parameters = itemParams$Parameters, item_response = itemData),
                   Z = DS.personFitIndexZ(personLikelihood = DS.personLikelihood(DScoreL$Dscore,item_parameters = itemParams$Parameters, item_response = itemData))
                 )
@@ -74,7 +76,10 @@ itemRES <- data.frame( Item    = names(itemData),
 personRES <- data.frame( PersonID = data[,1],
                           DScore   = DScore,
                           DScoreL  = DScoreL$Dscore,
-                          DScoreSE = DScoreL$SE,
+                          DScoreLSE = DScoreL$SE,
+                          TrueScore = TrueScore$trueScore,
+                          TrueScoreSE = TrueScore$SE,
+                          TrueScoreREL = TrueScore$REL,
                           IndexU   = Aberrant$U,
                           IndexZ   = Aberrant$Z$Z,
                           Aberrant = Aberrant$Z$index
