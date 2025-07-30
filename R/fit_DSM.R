@@ -115,7 +115,7 @@ for ( k in 1:length(itemDataD$Poly$Items) ) {
     }
 }
 
-
+}
 
 return(
   list(items   = itemRES,
@@ -123,5 +123,5 @@ return(
        poly    = itemDataD$Poly$Items
        )
       )
-}
+
 }
