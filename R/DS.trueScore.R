@@ -20,7 +20,7 @@ DS.trueScore <- function(deltas, parameters, Dscore, o = DS.options(), DscoreVAR
 
       NUM = sum( (w * parameters[,2] * P[k,] * (1-P[k,])) / (Dscore[k,]*(1 - Dscore[k,])))^2
       EVAR =  sum(w^2 * P[k,] * (1-P[k,]))
-      TVAR = (NUM/EVAR) * DscoreVAR
+      TVAR = NUM * DscoreVAR
       SNR = TVAR/EVAR
       rel[k,] = SNR / (1 + SNR)
   }
