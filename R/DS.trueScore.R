@@ -19,7 +19,9 @@ DS.trueScore <- function(deltas, parameters, Dscore, o = DS.options()
     list(
          "trueScore" = res,
          "SE" = se,
-         "REL" = rel$REL
+         "REL" = rel$REL,
+	 "meanREL" = rel$meanREL,
+	 "marginalREL" = rel$marginalREL
          )
     );
 }

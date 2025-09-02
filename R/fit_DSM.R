@@ -84,6 +84,11 @@ personRES <- data.frame( PersonID = data[,1],
                           IndexZ   = Aberrant$Z$Z,
                           Aberrant = Aberrant$Z$index
                           )
+testRES <- list(
+		"marginalREL" = TrueScore$marginalREL,
+		"meanREL"     = TrueScore$meanREL
+		)
+
 if ( ! no_output )
 {
   write.table(itemRES,paste(file_path_sans_ext(inputFile),'_items.csv',sep = ''), sep = ",", row.names = FALSE)
@@ -120,6 +125,7 @@ for ( k in 1:length(itemDataD$Poly$Items) ) {
 return(
   list(items   = itemRES,
        persons = personRES,
+       test    = testRES,
        poly    = itemDataD$Poly$Items
        )
       )
