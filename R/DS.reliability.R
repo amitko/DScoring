@@ -5,7 +5,7 @@ DS.reliability <- function(deltas, parameters, Dscore, o = DS.options(), DscoreV
 
   w = deltas / sum(deltas)
 
-  fit <- fitdistrplus::fitdist(Data[,1], "beta")
+  fit <- fitdistrplus::fitdist(as.numeric(Dscore), "beta")
 
   res = matrix(nrow = nrow(Dscore),ncol = 1)
   se  = matrix(nrow = nrow(Dscore),ncol = 1)
@@ -31,12 +31,16 @@ DS.reliability <- function(deltas, parameters, Dscore, o = DS.options(), DscoreV
       rel[k,] = SNR / (1 + SNR)
   }
 
-  uD = unique(Dscore)
   mREL = 0
 
-  for ( k in 1:lenght(uD) ) {
-	ri = which(Dscore == uD[k])[1] 
-	mREL = mREL + rel[ri,1] * dbeta(uD[k], fit$estimate[1],fit$estimate[2])
+  edg <- seq(0.01, 0.99, by = 0.01)
+  fD <- pbeta(edg, fit$estimate[1],fit$estimate[2])
+
+  for ( k in 2:length(edg) ) {
+	ri = which( Dscore[,1] > edg[k-1] & Dscore[,1] <= edg[k])
+	if (length(ri) > 0) {
+	  mREL = mREL + ( mean(rel[ri,1]) * (fD[k] - fD[k-1]) )
+	}
   }
   return(
     list(

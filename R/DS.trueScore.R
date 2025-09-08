@@ -1,4 +1,4 @@
-DS.trueScore <- function(deltas, parameters, Dscore, o = DS.options() 
+DS.trueScore <- function(deltas, parameters, Dscore, o = DS.options() )
 {
 
   P = DS.PCR(parameters,Dscore,o);
