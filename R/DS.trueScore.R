@@ -14,6 +14,7 @@ DS.trueScore <- function(deltas, parameters, Dscore, o = DS.options() )
       se[k,] = sqrt( sum(deltas^2 * P[k,] * (1-P[k,]))) / sum(deltas)
   }
 
+<<<<<<< HEAD
   rel <- DS.reliability(deltas, parameters, Dscore, se, o = o, DscoreVAR = 0)
   return(
     list(
@@ -22,6 +23,16 @@ DS.trueScore <- function(deltas, parameters, Dscore, o = DS.options() )
          "REL" = rel$REL,
 	       "meanREL" = rel$meanREL,
       	 "marginalREL" = rel$marginalREL
+=======
+  rel <- DS.reliability(deltas, parameters, Dscore, o = o, DscoreVAR = NULL)
+  return(
+    list(
+         "trueScore"   = res,
+         "SE"          = se,
+         "REL"         = rel$REL,
+	       "meanREL"     = rel$meanREL,
+	       "marginalREL" = rel$marginalREL
+>>>>>>> 6cc64874c10291d11bb2d9b4a3d5a18ea6906ea7
          )
     );
 }
