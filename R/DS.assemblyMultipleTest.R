@@ -164,7 +164,7 @@ DS.assemblyMultipleTest <- function( nOfTests, nOfItems, itemDeltas,
                                            targetFunction = f,
                                            meanOfDeltasTolerance = meanOfDeltasTolerance,
                                            meanOfDeltas = meanOfDeltas,
-                                           deltaDistribution = deltaDistribution
+                                           deltaDistribution = deltaDistribution * (shadowTestScale + 1)
                                            )
     if ( is.null(inCurrentTest) )
     {
