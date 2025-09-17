@@ -73,6 +73,7 @@ itemRES <- data.frame( Item    = names(itemData),
                         iSE     = itemParams$SE,
                         iMAD    = itemParams$MAD
                         )
+
 personRES <- data.frame( PersonID = data[,1],
                           DScore   = DScore,
                           DScoreL  = DScoreL$Dscore,
@@ -82,12 +83,14 @@ personRES <- data.frame( PersonID = data[,1],
                           TrueScoreREL = TrueScore$REL,
                           IndexU   = Aberrant$U,
                           IndexZ   = Aberrant$Z$Z,
-                          Aberrant = Aberrant$Z$index
-                          )
+                          Aberrant = Aberrant$Z$index,
+                          plausibleValues = TrueScore$plausibleValues
+                      )
 testRES <- list(
-		"marginalREL" = TrueScore$marginalREL,
-		"meanREL"     = TrueScore$meanREL
-		)
+            		marginalREL = TrueScore$marginalREL,
+		            meanREL     = TrueScore$meanREL,
+		            DScoreDistrParams = TrueScore$DScoreDistrParams
+		            )
 
 if ( ! no_output )
 {
