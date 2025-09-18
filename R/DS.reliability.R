@@ -57,11 +57,12 @@ DS.reliability <- function(deltas, parameters, Dscore, SE,o = DS.options(), Dsco
 
   return(
     list(
-         "REL"         = rel,
-      	 "meanREL"     = mean(rel),
-	       "marginalREL" = mREL,
-         "DScoreDistrParams" = fit$estimate,
-         "plausibleValues"   = pv
+         REL         = rel,
+      	 meanREL     = mean(rel),
+	       marginalREL = mREL,
+         DScoreDistrParams = fit$estimate,
+         plausibleValues   = pv,
+         DScoreVariance    = DscoreVAR
          )
     );
 }

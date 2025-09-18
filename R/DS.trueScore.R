@@ -23,7 +23,8 @@ DS.trueScore <- function(deltas, parameters, Dscore, o = DS.options() )
 	       "meanREL" = rel$meanREL,
       	 "marginalREL" = rel$marginalREL,
          "DScoreDistrParams" = rel$DScoreDistrParams,
-         "plausibleValues"   = rel$plausibleValues
+         "plausibleValues"   = rel$plausibleValues,
+         "DScoreVariance"    = rel$DScoreVariance
          )
     );
 }

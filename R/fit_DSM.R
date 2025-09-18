@@ -89,7 +89,8 @@ personRES <- data.frame( PersonID = data[,1],
 testRES <- list(
             		marginalREL = TrueScore$marginalREL,
 		            meanREL     = TrueScore$meanREL,
-		            DScoreDistrParams = TrueScore$DScoreDistrParams
+		            DScoreDistrParams = TrueScore$DScoreDistrParams,
+            		DScoreVariance    = TrueScore$DScoreVariance
 		            )
 
 if ( ! no_output )
