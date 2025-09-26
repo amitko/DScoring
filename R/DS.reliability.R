@@ -9,13 +9,13 @@ DS.reliability <- function(deltas, parameters, Dscore, SE,o = DS.options(), Dsco
   Dscore[which(Dscore < 0.01)] = 0.01
   pv <- DS.plausibleValues(DScores = Dscore, SE = SE, options = o)
 
-  #P = DS.PCR(parameters,Dscore,o)
+  P = DS.PCR(parameters,Dscore,o)
 
-  P = DS.PCR(parameters,matrix(pv[,1], ncol = 1),o)
+  #P = DS.PCR(parameters,matrix(pv[,1], ncol = 1),o)
 
   w = deltas / sum(deltas)
 
-  fit <- fitdistrplus::fitdist(as.numeric(Dscore), "beta")
+  fit <- fitdistrplus::fitdist(as.numeric(pv[,1]), "beta")
 
   res = matrix(nrow = nrow(Dscore),ncol = 1)
   se  = matrix(nrow = nrow(Dscore),ncol = 1)
@@ -35,8 +35,8 @@ DS.reliability <- function(deltas, parameters, Dscore, SE,o = DS.options(), Dsco
       res[k,] = sum( P[k,] * deltas ) / sum(deltas)
       se[k,] = sqrt( sum(deltas^2 * P[k,] * (1-P[k,]))) / sum(deltas)
 
-      #NUM = sum( (w * parameters[,2] * P[k,] * (1-P[k,])) / (Dscore[k,]*(1 - Dscore[k,])))^2
-      NUM = sum( (w * parameters[,2] * P[k,] * (1-P[k,])) / (pv[k,1]*(1 - pv[k,1])))^2
+      NUM = sum( (w * parameters[,2] * P[k,] * (1-P[k,])) / (Dscore[k,]*(1 - Dscore[k,])))^2
+      #NUM = sum( (w * parameters[,2] * P[k,] * (1-P[k,])) / (pv[k,1]*(1 - pv[k,1])))^2
       EVAR =  sum(w^2 * P[k,] * (1-P[k,]))
       TVAR = NUM * DscoreVAR
       SNR = TVAR/EVAR
