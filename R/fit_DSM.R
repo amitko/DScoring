@@ -55,7 +55,7 @@ DScoreL <- tryCatch(
   }
 )
 
-TrueScore <- DS.trueScore(deltas = itemDelta$delta,parameters = itemParams$Parameters, Dscore = DScore)
+ScoreProperties <- DS.propertiesDScore(deltas = itemDelta$delta,parameters = itemParams$Parameters, Dscore = DScore)
 
 Aberrant <- list( U = DS.personFitU(DScoreL$Dscore, item_parameters = itemParams$Parameters, item_response = itemData),
                   Z = DS.personFitIndexZ(personLikelihood = DS.personLikelihood(DScoreL$Dscore,item_parameters = itemParams$Parameters, item_response = itemData))
@@ -66,7 +66,7 @@ Aberrant <- list( U = DS.personFitU(DScoreL$Dscore, item_parameters = itemParams
 colnames(itemParams$Parameters) <- c('b','s')
 colnames(itemParams$SE) <- c('SE_b','SE_s')
 
-itemRES <- data.frame( Item    = names(itemData),
+itemRES <- data.frame( Item     = names(itemData),
                         delta   = itemDelta$delta,
                         dSE     = itemDelta$se,
                         iP      = itemParams$Parameters,
@@ -74,23 +74,23 @@ itemRES <- data.frame( Item    = names(itemData),
                         iMAD    = itemParams$MAD
                         )
 
-personRES <- data.frame( PersonID = data[,1],
-                          DScore   = DScore,
-                          DScoreL  = DScoreL$Dscore,
+personRES <- data.frame( PersonID   = data[,1],
+                          DScore    = DScore,
+                          DScoreL   = DScoreL$Dscore,
                           DScoreLSE = DScoreL$SE,
-                          TrueScore = TrueScore$trueScore,
-                          TrueScoreSE = TrueScore$SE,
-                          TrueScoreREL = TrueScore$REL,
-                          IndexU   = Aberrant$U,
-                          IndexZ   = Aberrant$Z$Z,
-                          Aberrant = Aberrant$Z$index,
-                          plausibleValues = TrueScore$plausibleValues
+                          TrueScore = ScoreProperties$trueScore,
+                          DwSE      = ScoreProperties$SE,
+                          DwREL     = ScoreProperties$REL,
+                          IndexU    = Aberrant$U,
+                          IndexZ    = Aberrant$Z$Z,
+                          Aberrant  = Aberrant$Z$index,
+                          plausibleValues = ScoreProperties$plausibleValues
                       )
 testRES <- list(
-            		marginalREL = TrueScore$marginalREL,
-		            meanREL     = TrueScore$meanREL,
-		            DScoreDistrParams = TrueScore$DScoreDistrParams,
-            		DScoreVariance    = TrueScore$DScoreVariance
+            		marginalREL       = ScoreProperties$marginalREL,
+		            meanREL           = ScoreProperties$meanREL,
+		            DScoreDistrParams = ScoreProperties$DScoreDistrParams,
+            		DScoreVariance    = ScoreProperties$DScoreVariance
 		            )
 
 if ( ! no_output )
