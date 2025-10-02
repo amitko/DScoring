@@ -80,15 +80,16 @@ personRES <- data.frame( PersonID   = data[,1],
                           DScoreLSE = DScoreL$SE,
                           TrueScore = ScoreProperties$trueScore,
                           DwSE      = ScoreProperties$SE,
-                          DwREL     = ScoreProperties$REL,
+                          DwREL     = ScoreProperties$condReliability,
                           IndexU    = Aberrant$U,
                           IndexZ    = Aberrant$Z$Z,
                           Aberrant  = Aberrant$Z$index,
                           plausibleValues = ScoreProperties$plausibleValues
                       )
 testRES <- list(
-            		marginalREL       = ScoreProperties$marginalREL,
-		            meanREL           = ScoreProperties$meanREL,
+            		ACR               = ScoreProperties$ACR,
+		            MR                = ScoreProperties$MR,
+            		meanReliavility   = ScoreProperties$meanReliability,
 		            DScoreDistrParams = ScoreProperties$DScoreDistrParams,
             		DScoreVariance    = ScoreProperties$DScoreVariance
 		            )
