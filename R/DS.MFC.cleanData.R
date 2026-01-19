@@ -3,7 +3,7 @@
 # blocks - vector, indicating from which block is the item
 # negative_indicatior - vector with size number of blocks, 1 if items are negative within the block
 
-DS.MFC.cleanData <- function(data, blocks, negative_block_indicatior)
+DS.MFC.cleanData <- function(data, blocks, negative_item_indicatior)
 {
 
     data[is.na(data)] <- 0
@@ -37,11 +37,17 @@ DS.MFC.cleanData <- function(data, blocks, negative_block_indicatior)
         }
         else {
 
-          if ( negative_block_indicatior[blk] )
+          if ( all(negative_item_indicatior[which(blocks == blk)] == TRUE) ==  TRUE)
           {
             itemData = (max(itemData) + 1) - itemData
           }
-
+          else if ( all(negative_item_indicatior[which(blocks == blk)] == FALSE) ==  TRUE)
+          {
+            itemData <- itemData
+          }
+          else {
+            stop(paste("Unsupported block design for block ", as.character(blk), sep = ''))
+          }
           response <- cbind(response,t(itemData))
 
         }
