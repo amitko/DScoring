@@ -5,12 +5,13 @@ DS.personDscore <- function(itemData, deltas, type="relative_to_d" ) {
       res[k,] = sum(as.numeric(itemData[k,]) * deltas)
     }
     if (type == "relative_to_d") {
-      res[k,] = sum(as.numeric(itemData[k,]) * deltas)/ sum(deltas);
+      res[k,] = sum(as.numeric(itemData[k,]) * deltas)/ sum(deltas)
     }
     if (type == "relative_to_n") {
-      res[k,] = sum(as.numeric(itemData[k,]) * deltas)/ nrow(itemData);
+      res[k,] = sum(as.numeric(itemData[k,]) * deltas)/ nrow(itemData)
     }
     
   }
+  res[which(res > 1)] <- 1
   return( res);
 }
