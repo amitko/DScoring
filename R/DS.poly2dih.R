@@ -17,7 +17,8 @@ DS.poly2dih <- function(Response)
     if ( all( Response[,k] %in% c(0, 1) ) )  # dihotomous
     {
       DIHscores <- cbind(DIHscores, Response[,k])
-      Poly$Labels <- c(Poly$Labels, paste(as.character(c), '-', cn[k] , '-' , as.character(k)));
+#      Poly$Labels <- c(Poly$Labels, paste(as.character(c), '-', cn[k] , '-' , as.character(k)));
+      Poly$Labels <- c(Poly$Labels, cn[k]);
       p <- list( is = 0,
                  items = c
                 )
@@ -32,7 +33,8 @@ DS.poly2dih <- function(Response)
       {
         Correct <- as.integer(Response[,k] >= l)
         DIHscores <- cbind( DIHscores, Correct)
-        Poly$Labels =  c(Poly$Labels, paste(as.character(c), '-', cn[k] , '-' , as.character(k), '[', as.character(l), ']', sep = ''))
+#        Poly$Labels =  c(Poly$Labels, paste(as.character(c), '-', cn[k] , '-' , as.character(k), '[', as.character(l), ']', sep = ''))
+        Poly$Labels =  c(Poly$Labels, paste(cn[k] , '-[', as.character(l), ']', sep = ''))
         pp <- c(pp, ncol(DIHscores))
         c <- c+1
       }
