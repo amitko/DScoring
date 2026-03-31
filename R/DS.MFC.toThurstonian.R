@@ -1,13 +1,12 @@
-library(r2r)
-
-DS.MFC.toThurstonian <- function(data, blocks, traits = null)
+DS.MFC.toThurstonian <- function(data, blocks, traits = null, negItem = null)
 {
 
 if ( is.null(traits) ) {
     traits = rep(1,lenghth(blocks))
 }
 
-itemsInTrait <- hashmap()
+itemsInTrait <- r2r::hashmap()
+DRV          <- r2r::hashmap()
 
 # i1i2, i1i3, i2i3
 m3 <- hashmap()
@@ -81,6 +80,8 @@ for (blk in unique(blocks))
     colNames <- c(colNames, paste( "i", as.character(CC[,ii][1]), "i", as.character(CC[,ii][2]), sep = ''))
     itemsInTrait[[ as.numeric(traits[ CC[,ii][1] ]) ]] <- c(itemsInTrait[[ as.numeric(traits[ CC[,ii][1] ]) ]], last )
     itemsInTrait[[ as.numeric(traits[ CC[,ii][2] ]) ]] <- c(itemsInTrait[[ as.numeric(traits[ CC[,ii][2] ]) ]], last )
+    DRV[[ as.numeric(traits[ CC[,ii][1] ]) ]] <- c(DRV[[ as.numeric(traits[ CC[,ii][1] ]) ]], if ( negItem[CC[,ii][1]] ) 0 else 1)
+    DRV[[ as.numeric(traits[ CC[,ii][2] ]) ]] <- c(DRV[[ as.numeric(traits[ CC[,ii][2] ]) ]], if ( negItem[CC[,ii][2]] ) 1 else 0)
   }
 
   dataT <- matrix(ncol = ncol(CC), nrow = nrow(data));
@@ -99,7 +100,8 @@ for (blk in unique(blocks))
 return (
         list(
             ThurstonianData = result,
-            itemsInTrait   = itemsInTrait
+            itemsInTrait    = itemsInTrait,
+            DRV             = DRV
         )
         )
 }

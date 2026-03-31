@@ -1,7 +1,7 @@
 Package: DScoring
 Type: Package
 Title: D-Scoring
-Version: 1.1.0
+Version: 1.2.0
 Author: Dimitar Atanasov
 Maintainer: Dimitar Atanasov <datanasov@nbu.bg>
 Description: D-Scoring approach for test evaluation
@@ -9,7 +9,7 @@ License: GPL
 Encoding: UTF-8
 LazyData: true
 Imports:
-    boot, RColorBrewer, maxLik, miscTools, nls2, lavaan, stats, fitdistrplus, logitnorm, modopt.matlab, tools
+    boot, RColorBrewer, maxLik, miscTools, nls2, lavaan, stats, fitdistrplus, logitnorm, modopt.matlab, tools, r2r
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
