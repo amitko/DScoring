@@ -1,4 +1,4 @@
-DS.MFC.toThurstonian <- function(data, blocks, traits = null, negItem = null)
+DS.MFC.toThurstonian <- function(data, blocks, traits = null)
 {
 
 if ( is.null(traits) ) {
@@ -80,8 +80,8 @@ for (blk in unique(blocks))
     colNames <- c(colNames, paste( "i", as.character(CC[,ii][1]), "i", as.character(CC[,ii][2]), sep = ''))
     itemsInTrait[[ as.numeric(traits[ CC[,ii][1] ]) ]] <- c(itemsInTrait[[ as.numeric(traits[ CC[,ii][1] ]) ]], last )
     itemsInTrait[[ as.numeric(traits[ CC[,ii][2] ]) ]] <- c(itemsInTrait[[ as.numeric(traits[ CC[,ii][2] ]) ]], last )
-    DRV[[ as.numeric(traits[ CC[,ii][1] ]) ]] <- c(DRV[[ as.numeric(traits[ CC[,ii][1] ]) ]], if ( negItem[CC[,ii][1]] ) 0 else 1)
-    DRV[[ as.numeric(traits[ CC[,ii][2] ]) ]] <- c(DRV[[ as.numeric(traits[ CC[,ii][2] ]) ]], if ( negItem[CC[,ii][2]] ) 1 else 0)
+    DRV[[ as.numeric(traits[ CC[,ii][1] ]) ]] <- c(DRV[[ as.numeric(traits[ CC[,ii][1] ]) ]], 1)
+    DRV[[ as.numeric(traits[ CC[,ii][2] ]) ]] <- c(DRV[[ as.numeric(traits[ CC[,ii][2] ]) ]], 0)
   }
 
   dataT <- matrix(ncol = ncol(CC), nrow = nrow(data));
