@@ -2,8 +2,9 @@
 # data - data to be cleaned
 # blocks - vector, indicating from which block is the item
 # negative_indicatior - vector with size number of blocks, 1 if items are negative within the block
+#                       If Negative items are treated on DRV level should be zeos.
 
-DS.MFC.cleanData <- function(data, blocks, negative_item_indicatior)
+DS.MFC.cleanData <- function(data, blocks, negative_item_indicatior = rep(0, length(blocks)))
 {
 
     data[is.na(data)] <- 0
