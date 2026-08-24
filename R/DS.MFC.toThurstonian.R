@@ -73,13 +73,15 @@ for (blk in unique(blocks))
 
   colNames <- c()
 
-  CC = combn(items_in_block,2)
+  CC <- combn(items_in_block,2)
 
   for (ii in 1:ncol(CC))
   {
     last <- last + 1
     colNames <- c(colNames, paste( "i", as.character(CC[,ii][1]), "i", as.character(CC[,ii][2]), sep = ''))
+    
     itemsInTrait[[ as.numeric(traits[ CC[,ii][1] ]) ]] <- c(itemsInTrait[[ as.numeric(traits[ CC[,ii][1] ]) ]], last )
+    
     itemsInTrait[[ as.numeric(traits[ CC[,ii][2] ]) ]] <- c(itemsInTrait[[ as.numeric(traits[ CC[,ii][2] ]) ]], last )
 
     if ( negative_item_indicatior[ CC[,ii][1]  ] == 0 )
@@ -100,14 +102,14 @@ for (blk in unique(blocks))
     }
   }
 
-  if ( ncol(CC) > 2 )
-  {
+ # if ( ncol(CC) > 2 )
+#  {
     dataTcols <- ncol(CC)
-  }
-  else
-  {
-    dataTcols <- 2
-  }
+ # }
+#  else
+ # {
+#    dataTcols <- 2
+#  }
 
   dataT <- matrix(ncol = dataTcols, nrow = nrow(data));
 
