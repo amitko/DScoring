@@ -39,13 +39,13 @@ m4[[c(4,2,3,1)]] <- c(0,0,0,1,0,0)
 m4[[c(4,1,3,2)]] <- c(1,1,0,0,0,0)
 m4[[c(1,4,3,2)]] <- c(1,1,1,0,0,0)
 m4[[c(3,4,1,2)]] <- c(1,0,0,0,0,1)
-m4[[c(4,3,1,2)]] <- c(0,1,0,0,0,1)
+m4[[c(4,3,1,2)]] <- c(1,0,0,0,0,0)
 m4[[c(1,3,4,2)]] <- c(1,1,1,0,0,1)
 m4[[c(3,1,4,2)]] <- c(1,0,1,0,0,1)
 m4[[c(2,1,4,3)]] <- c(0,1,1,1,1,0)
 m4[[c(1,2,4,3)]] <- c(1,1,1,1,1,0)
 m4[[c(4,2,1,3)]] <- c(0,1,0,1,0,0)
-m4[[c(2,4,1,3)]] <- c(0,0,1,1,1,0)
+m4[[c(2,4,1,3)]] <- c(0,1,0,1,1,0)
 m4[[c(1,4,2,3)]] <- c(1,1,1,1,0,0)
 m4[[c(4,1,2,3)]] <- c(1,1,0,1,0,0)
 
@@ -79,9 +79,9 @@ for (blk in unique(blocks))
   {
     last <- last + 1
     colNames <- c(colNames, paste( "i", as.character(CC[,ii][1]), "i", as.character(CC[,ii][2]), sep = ''))
-    
+
     itemsInTrait[[ as.numeric(traits[ CC[,ii][1] ]) ]] <- c(itemsInTrait[[ as.numeric(traits[ CC[,ii][1] ]) ]], last )
-    
+
     itemsInTrait[[ as.numeric(traits[ CC[,ii][2] ]) ]] <- c(itemsInTrait[[ as.numeric(traits[ CC[,ii][2] ]) ]], last )
 
     if ( negative_item_indicatior[ CC[,ii][1]  ] == 0 )

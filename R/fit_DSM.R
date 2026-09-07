@@ -92,7 +92,8 @@ testRES <- list(
 		            mREL              = ScoreProperties$mREL,
             		meanReliability   = ScoreProperties$meanReliability,
 		            DScoreDistrParams = ScoreProperties$DScoreDistrParams,
-            		DScoreVariance    = ScoreProperties$DScoreVariance
+            		DScoreVariance    = ScoreProperties$DScoreVariance,
+            		DihResponse       = itemDataD
 		            )
 
 if ( ! no_output )
